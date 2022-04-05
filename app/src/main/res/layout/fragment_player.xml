@@ -5,6 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/playerViewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="trackTextView, artistTextView, coverImageCardView, bottomBackgroundView, playerSeekBar, playTimeTextView, totalTimeTextView" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/playListViewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="titleTextView, playListRecyclerView, playListSeekBar" />
+
     <View
         android:id="@+id/topBackgroundView"
         android:layout_width="0dp"
@@ -54,6 +68,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/artistTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
@@ -65,6 +80,7 @@
         tools:text="대한민국"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/coverImageCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="36dp"
