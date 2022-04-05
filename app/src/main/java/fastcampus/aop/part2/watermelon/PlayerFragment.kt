@@ -18,8 +18,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
+    private var model = PlayerModel()
     private var binding: FragmentPlayerBinding? = null
-    private var isWatchingPlayListView = true
     private var player: ExoPlayer? = null
     private lateinit var playListAdapter: PlayListAdapter
 
@@ -88,11 +88,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private fun initPlayListButton(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playListImageView.setOnClickListener {
-            // todo 만야 서버에서 데이터가 다 불려오지 않은 상태
-            fragmentPlayerBinding.playerViewGroup.isVisible = isWatchingPlayListView
-            fragmentPlayerBinding.playListViewGroup.isVisible = !isWatchingPlayListView
+            if (model.currentPosition == -1) return@setOnClickListener
 
-            isWatchingPlayListView = !isWatchingPlayListView
+            fragmentPlayerBinding.playerViewGroup.isVisible = model.isWatchingPlayListView
+            fragmentPlayerBinding.playListViewGroup.isVisible = !model.isWatchingPlayListView
+
+            model.isWatchingPlayListView = !model.isWatchingPlayListView
         }
     }
 
@@ -109,11 +110,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                         override fun onResponse(call: Call<MusicDto>, response: Response<MusicDto>) {
                             //Log.d("PlayerFragment", "${response.body()}")
                             response.body()?.let { musicDto ->
-                                val modelList = musicDto.musics.mapIndexed { index, musicEntity ->
-                                    musicEntity.mapper(index.toLong())
-                                }
-                                setMusicList(modelList)
-                                playListAdapter.submitList(modelList)
+                                model = musicDto.mapper()
+                                setMusicList(model.getAdapterModels())
+                                playListAdapter.submitList(model.getAdapterModels())
                             }
                         }
 
@@ -133,7 +132,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                     .build()
             })
             player?.prepare()
-            player?.play()
         }
     }
 
