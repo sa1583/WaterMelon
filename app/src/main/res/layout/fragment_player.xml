@@ -94,8 +94,8 @@
 
         <ImageView
             android:id="@+id/coverImageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             tools:background="@color/purple_200" />
 
     </androidx.cardview.widget.CardView>
@@ -164,7 +164,8 @@
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:clickable="false"
-        android:paddingHorizontal="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
         android:progressTint="@color/purple_200"
         android:thumbTint="@color/purple_200"
         app:layout_constraintEnd_toEndOf="parent"
